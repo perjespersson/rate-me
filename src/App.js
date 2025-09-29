@@ -17,13 +17,13 @@ const availableMovies = [
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchedMovie, setSearchedMovie] = useState(null);
+  const [searchedMovie, setSearchedMovie] = useState("");
   const [loading, setLoading] = useState(false);
   const [reviews, setReviews] = useState([])
 
   useEffect(() => {
     if (!searchTerm) {
-      setSearchedMovie(null);
+      setSearchedMovie("");
       setLoading(false);
       return;
     }

@@ -7,8 +7,8 @@ function Movie({ availableMovies, reviews, setReviews }) {
   const [showModal, setShowModal] = useState(false);
 
   const { id } = useParams();
-  const movie = availableMovies.find(m => m.id.toString() === id);
-  const movieReviews = movie ? reviews.filter(r => r.movieId === movie.id) : [];
+  const movie = availableMovies.find(m => m.id === parseInt(id));
+  const movieReviews = reviews.filter(r => r.movieId === movie.id);
   
   return (
     <>
