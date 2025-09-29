@@ -6,4 +6,6 @@ Search and review movies from the `availableMovies` array.
    ```bash
    npm install
 
-2. npm start
+1. Start server:  
+   ```bash
+   npm run
