@@ -11,9 +11,8 @@ function ReviewModal({ setReviews, setShowModal }) {
     e.preventDefault();
 
     const parsedRating = rating ? parseFloat(rating) : "";
-    const parsedId = parseInt(id)
 
-    setReviews(prev => [...prev, { movieId: parsedId, comment: comment, rating: parsedRating }]);
+    setReviews(prev => [...prev, { movieId: id, comment: comment, rating: parsedRating }]);
     setShowModal(false);
 
     setComment("");

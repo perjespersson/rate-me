@@ -1,15 +1,7 @@
 import Spinner from './Spinner';
 import { Link } from 'react-router-dom';
 
-function SearchResult({ movie, reviews, loading, searchTerm }) {
-  // Filter out reviews for searched movie
-  const movieReviews = reviews.filter(r => r.movieId === movie.id);
-
-  // Calculate average rating, if any reviews exists
-  const averageRating = movieReviews.length > 0
-    ? (movieReviews.reduce((sum, r) => sum + r.rating, 0) / movieReviews.length).toFixed(1)
-    : "?";
-
+function SearchResult({ movie, reviews, loading, searchTerm, setSearchTerm }) {
   if (loading) return <Spinner />;
 
   return (
@@ -19,13 +11,10 @@ function SearchResult({ movie, reviews, loading, searchTerm }) {
           <Link 
             to={`/${movie.id}`} 
             className="link-dark link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-100-hover"
+            onClick={() => setSearchTerm("")} 
           >
             <b>{movie.title} ({movie.year})</b>
           </Link>
-
-          <span className="badge text-bg-warning rounded-pill">
-            <i className="bi bi-star-fill"></i> {averageRating}
-          </span>
         </li>
       ) : (
         searchTerm && (

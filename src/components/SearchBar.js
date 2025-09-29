@@ -1,4 +1,4 @@
-function SearchBar({ searchTerm, onSearchChange, onClear }) {
+function SearchBar({ searchTerm, setSearchTerm }) {
   return (
     <div className="input-group">
       <input
@@ -6,11 +6,11 @@ function SearchBar({ searchTerm, onSearchChange, onClear }) {
         className="form-control"
         placeholder="Search movie..."
         value={searchTerm}
-        onChange={e => onSearchChange(e.target.value)}
+        onChange={e => setSearchTerm(e.target.value)}
       />
 
-      <button className="btn btn-dark" onClick={onClear}>
-        <b>X</b>
+      <button className="btn btn-dark fw-bold" onClick={() => setSearchTerm("")}>
+        X
       </button>
     </div>
   );

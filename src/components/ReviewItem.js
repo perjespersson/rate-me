@@ -4,7 +4,7 @@ function ReviewItem({ review }) {
       <p className="m-0">{ review.comment }</p>
 
       <span className="badge text-bg-warning rounded-pill">
-        <i className="bi bi-star-fill"></i> {review.rating ?? "?"}
+        <i className="bi bi-star-fill"></i> {review.rating || "?"}
       </span>
     </li>
   );

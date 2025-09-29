@@ -4,15 +4,16 @@ import SearchResult from './components/SearchResult';
 import SearchBar from './components/SearchBar';
 import Movie from './components/Movie';
 
+// List of available movies. IDs are stored as strings to match useParams()
 const availableMovies = [
-  { id: 1, title: 'The Shawshank Redemption', year: 1994},
-  { id: 2, title: 'The Godfather', year: 1972},
-  { id: 3, title: 'The Dark Knight', year: 2008},
-  { id: 4, title: 'Pulp Fiction', year: 1994},
-  { id: 5, title: 'Forrest Gump', year: 1994},
-  { id: 6, title: 'Inception', year: 2010},
-  { id: 7, title: 'Interstellar', year: 2014},
-  { id: 8, title: 'Parasite', year: 2019},
+  { id: "1", title: 'The Shawshank Redemption', year: 1994 },
+  { id: "2", title: 'The Godfather', year: 1972 },
+  { id: "3", title: 'The Dark Knight', year: 2008 },
+  { id: "4", title: 'Pulp Fiction', year: 1994 },
+  { id: "5", title: 'Forrest Gump', year: 1994 },
+  { id: "6", title: 'Inception', year: 2010 },
+  { id: "7", title: 'Interstellar', year: 2014 },
+  { id: "8", title: 'Parasite', year: 2019 },
 ];
 
 function App() {
@@ -55,15 +56,15 @@ function App() {
                   <>
                     <SearchBar
                       searchTerm={searchTerm}
-                      onSearchChange={setSearchTerm}
-                      onClear={() => setSearchTerm("")} 
+                      setSearchTerm={setSearchTerm}
                     />
                     
                     <SearchResult
                       movie={searchedMovie}
                       reviews={reviews}
                       loading={loading}
-                      searchTerm={searchTerm} 
+                      searchTerm={searchTerm}
+                      setSearchTerm={setSearchTerm}
                     />
                   </>
               }
