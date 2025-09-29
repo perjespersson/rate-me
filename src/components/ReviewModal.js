@@ -30,7 +30,6 @@ function ReviewModal({ setReviews, setShowModal }) {
             <input 
               type="text"
               className="form-control"
-              value={comment} 
               onChange={(e) => setComment(e.target.value)}
               required 
             />
@@ -41,11 +40,10 @@ function ReviewModal({ setReviews, setShowModal }) {
             <input 
               type="number" 
               className="form-control" 
-              value={rating} 
               onChange={(e) => setRating(e.target.value)}
-              min="0" 
-              max="10" 
-              step="0.1"
+              min="1" 
+              max="5" 
+              step="1"
             />
           </div>
 
