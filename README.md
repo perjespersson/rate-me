@@ -8,4 +8,4 @@ Search and review movies from the `availableMovies` array.
 
 1. Start server:  
    ```bash
-   npm run
+   npm start
