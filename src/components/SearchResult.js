@@ -1,7 +1,7 @@
 import Spinner from './Spinner';
 import { Link } from 'react-router-dom';
 
-function SearchResult({ movie, reviews, loading, searchTerm, setSearchTerm }) {
+function SearchResult({ movie, loading, searchTerm, setSearchTerm }) {
   if (loading) return <Spinner />;
 
   return (

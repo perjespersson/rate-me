@@ -61,7 +61,6 @@ function App() {
                     
                     <SearchResult
                       movie={searchedMovie}
-                      reviews={reviews}
                       loading={loading}
                       searchTerm={searchTerm}
                       setSearchTerm={setSearchTerm}
