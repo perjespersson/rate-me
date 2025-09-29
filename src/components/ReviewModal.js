@@ -1,17 +1,25 @@
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-function ReviewModal({ onClose, onSave }) {
-  const [comment, setComment] = useState(null);
-  const [rating, setRating] = useState(null);
+function ReviewModal({ setReviews, setShowModal }) {
+  const [comment, setComment] = useState("");
+  const [rating, setRating] = useState("");
 
-  const handleSubmit = () => {
-    const parsedRating = rating ? parseFloat(rating) : null;
-    onSave(comment, parsedRating);
+  const { id } = useParams();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const parsedRating = rating ? parseFloat(rating) : "";
+    const parsedId = parseInt(id)
+
+    setReviews(prev => [...prev, { movieId: parsedId, comment: comment, rating: parsedRating }]);
+    setShowModal(false);
 
     setComment("");
     setRating("");
   };
-  
+
   return (
     <div className="modal-backdrop d-flex align-items-center justify-content-center">
       <div className="modal-content p-4 rounded bg-white" style={{ width: "400px" }}>
@@ -43,7 +51,7 @@ function ReviewModal({ onClose, onSave }) {
           </div>
 
           <div className="d-flex justify-content-end gap-2">
-            <button type="button" className="btn btn-secondary" onClick={onClose}>Cancel</button>
+            <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>Cancel</button>
             <button type="submit" className="btn btn-primary">Save</button>
           </div>
         </form>
