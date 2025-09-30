@@ -4,42 +4,49 @@ import SearchResult from './components/SearchResult';
 import SearchBar from './components/SearchBar';
 import Movie from './components/Movie';
 
-// List of available movies. IDs are stored as strings to match useParams()
-const availableMovies = [
-  { id: "1", title: 'The Shawshank Redemption', year: 1994 },
-  { id: "2", title: 'The Godfather', year: 1972 },
-  { id: "3", title: 'The Dark Knight', year: 2008 },
-  { id: "4", title: 'Pulp Fiction', year: 1994 },
-  { id: "5", title: 'Forrest Gump', year: 1994 },
-  { id: "6", title: 'Inception', year: 2010 },
-  { id: "7", title: 'Interstellar', year: 2014 },
-  { id: "8", title: 'Parasite', year: 2019 },
-];
-
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchedMovie, setSearchedMovie] = useState("");
+  const [movies, setMovies] = useState([]);
+  const [searchedMovie, setSearchedMovie] = useState(""); // "DB" should probably be on the backend but since I had it here in part 1, I decided to keep it
   const [loading, setLoading] = useState(false);
   const [reviews, setReviews] = useState([])
+  const [error, setError] = useState("")
 
   useEffect(() => {
+    // Reset search onClear
     if (!searchTerm) {
       setSearchedMovie("");
+      setError("");
       setLoading(false);
       return;
     }
 
     setLoading(true);
 
-    // Debounce for "smoother" search
-    const timer = setTimeout(() => {
-      // Use "find" since the API later on only returns one item
-      const searchResult = availableMovies.find(
-        movie => movie.title.toLowerCase() === searchTerm.toLowerCase()
-      );
+    const timer = setTimeout(async () => {
+      try {
+        const response = await fetch(`http://localhost:5267/api/movie?title=${encodeURIComponent(searchTerm)}`);
+        const searchResult = await response.json();
 
-      setSearchedMovie(searchResult);
-      setLoading(false);
+        if (!response.ok) {
+          setSearchedMovie("");
+          setError(searchResult.error);
+        } else {
+          setSearchedMovie(searchResult);
+          setError("");
+
+          // Add searchedMovie to movies if it is not already present
+          setMovies(prev => {
+            const exists = prev.some(m => m.title === searchResult.title);
+            return exists ? prev : [...prev, searchResult];
+          });
+        }
+      } catch {
+        setSearchedMovie("");
+        setError("Unable to fetch data. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
     }, 500);
 
     return () => clearTimeout(timer);
@@ -64,16 +71,17 @@ function App() {
                       loading={loading}
                       searchTerm={searchTerm}
                       setSearchTerm={setSearchTerm}
+                      error={error}
                     />
                   </>
               }
             />
 
             <Route 
-              path="/:id" 
+              path="/:title"
               element={
                 <Movie 
-                  availableMovies={availableMovies} 
+                  movies={movies} 
                   reviews={reviews} 
                   setReviews={setReviews}
                 />

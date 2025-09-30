@@ -5,14 +5,14 @@ function ReviewModal({ setReviews, setShowModal }) {
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState("");
 
-  const { id } = useParams();
+  const { title } = useParams();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const parsedRating = rating ? parseFloat(rating) : "";
 
-    setReviews(prev => [...prev, { movieId: id, comment: comment, rating: parsedRating }]);
+    setReviews(prev => [...prev, { movieTitle: title, comment: comment, rating: parsedRating }]);
     setShowModal(false);
 
     setComment("");

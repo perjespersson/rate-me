@@ -1,7 +1,7 @@
 import Spinner from './Spinner';
 import { Link } from 'react-router-dom';
 
-function SearchResult({ movie, loading, searchTerm, setSearchTerm }) {
+function SearchResult({ movie, loading, searchTerm, setSearchTerm, error }) {
   if (loading) return <Spinner />;
 
   return (
@@ -9,7 +9,7 @@ function SearchResult({ movie, loading, searchTerm, setSearchTerm }) {
       {movie ? (
         <li className="border rounded bg-white p-3 d-flex justify-content-between align-items-center mt-3">
           <Link 
-            to={`/${movie.id}`} 
+            to={`/${movie.title}`} 
             className="link-dark link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-100-hover"
             onClick={() => setSearchTerm("")} 
           >
@@ -18,7 +18,7 @@ function SearchResult({ movie, loading, searchTerm, setSearchTerm }) {
         </li>
       ) : (
         searchTerm && (
-          <li className="list-group-item text-center mt-4">No results</li>
+          <li className="list-group-item text-center mt-4">{error}</li>
         )
       )}
     </ul>

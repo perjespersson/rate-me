@@ -3,10 +3,10 @@ import { useState } from 'react';
 import ReviewItem from './ReviewItem';
 import ReviewModal from './ReviewModal';
 
-function Movie({ availableMovies, reviews, setReviews }) {
-  const { id } = useParams();
-  const movie = availableMovies.find(m => m.id === id);
-  const movieReviews = reviews.filter(r => r.movieId === movie.id);
+function Movie({ movies, reviews, setReviews }) {
+  const { title } = useParams();
+  const movie = movies.find(m => m.title === title);
+  const movieReviews = reviews.filter(r => r.movieTitle === movie.title);
   
   const [showModal, setShowModal] = useState(false);
 
