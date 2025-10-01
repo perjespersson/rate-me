@@ -2,13 +2,16 @@ import { useParams, Link } from 'react-router-dom';
 import { useState } from 'react';
 import ReviewItem from './ReviewItem';
 import ReviewModal from './ReviewModal';
+import Rating from './Rating';
+import RatingModal from './RatingModal';
 
-function Movie({ movies, reviews, setReviews }) {
+function Movie({ movies, reviews, setReviews, setMovies }) {
   const { title } = useParams();
   const movie = movies.find(m => m.title === title);
   const movieReviews = reviews.filter(r => r.movieTitle === movie.title);
   
-  const [showModal, setShowModal] = useState(false);
+  const [showReviewModal, setShowReviewModal] = useState(false);
+  const [showRatingModal, setShowRatingModal] = useState(false);
 
   return (
     <>
@@ -27,7 +30,27 @@ function Movie({ movies, reviews, setReviews }) {
         </div>
       ) : (
         <>
-          <h2 className="mt-2 fw-bold">{movie.title}</h2>
+          <div className="d-flex justify-content-between align-items-center gap-2">
+            <h2 className="fw-bold">{movie.title}</h2>
+
+            <div className="d-flex justify-content-start align-items-center gap-2">
+              <Rating movie={movie} reviews={reviews} />
+
+              <i
+                className="bi bi-pencil-square fs-7 cursor-pointer"
+                onClick={() => setShowRatingModal(true)}
+              ></i>
+            </div>
+
+            {showRatingModal && (
+              <RatingModal
+                movie={movie}
+                setMovies={setMovies}
+                setShowRatingModal={setShowRatingModal}
+              />
+            )}
+          </div>
+
           <p>Released: {movie.year}</p>
 
           <hr className="border-secondary-subtle" />
@@ -37,7 +60,7 @@ function Movie({ movies, reviews, setReviews }) {
 
             <div 
               className="d-flex justify-content-between align-items-center gap-2 cursor-pointer"
-              onClick={() => setShowModal(true)}
+              onClick={() => setShowReviewModal(true)}
             >
               <i className="bi bi-plus-circle"></i>
               <p className="m-0 fs-7">New review</p>
@@ -54,10 +77,10 @@ function Movie({ movies, reviews, setReviews }) {
             )}
           </ul>
 
-          {showModal && (
+          {showReviewModal && (
             <ReviewModal
               setReviews={setReviews}
-              setShowModal={setShowModal}
+              setShowReviewModal={setShowReviewModal}
             />
           )}
         </>

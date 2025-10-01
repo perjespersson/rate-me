@@ -38,7 +38,7 @@ function App() {
           // Add searchedMovie to movies if it is not already present
           setMovies(prev => {
             const exists = prev.some(m => m.title === searchResult.title);
-            return exists ? prev : [...prev, searchResult];
+            return exists ? prev : [...prev, { ...searchResult, rating: null }]; // Not the best solution, but since a movie can have multiple reviews we need one that can override the average
           });
         }
       } catch {
@@ -67,11 +67,13 @@ function App() {
                     />
                     
                     <SearchResult
-                      movie={searchedMovie}
+                      searchedMovie={searchedMovie}
+                      movies={movies}
                       loading={loading}
                       searchTerm={searchTerm}
                       setSearchTerm={setSearchTerm}
                       error={error}
+                      reviews={reviews}
                     />
                   </>
               }
@@ -84,6 +86,7 @@ function App() {
                   movies={movies} 
                   reviews={reviews} 
                   setReviews={setReviews}
+                  setMovies={setMovies}
                 />
               } 
             />

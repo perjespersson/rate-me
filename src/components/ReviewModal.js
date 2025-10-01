@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-function ReviewModal({ setReviews, setShowModal }) {
+function ReviewModal({ setReviews, setShowReviewModal }) {
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState("");
 
@@ -13,7 +13,7 @@ function ReviewModal({ setReviews, setShowModal }) {
     const parsedRating = rating ? parseFloat(rating) : "";
 
     setReviews(prev => [...prev, { movieTitle: title, comment: comment, rating: parsedRating }]);
-    setShowModal(false);
+    setShowReviewModal(false);
 
     setComment("");
     setRating("");
@@ -48,7 +48,7 @@ function ReviewModal({ setReviews, setShowModal }) {
           </div>
 
           <div className="d-flex justify-content-end gap-2">
-            <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>Cancel</button>
+            <button type="button" className="btn btn-secondary" onClick={() => setShowReviewModal(false)}>Cancel</button>
             <button type="submit" className="btn btn-primary">Save</button>
           </div>
         </form>
